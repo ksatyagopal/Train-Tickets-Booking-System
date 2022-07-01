@@ -1,0 +1,53 @@
+﻿@model IEnumerable<BookMyTrainAdminClientApp.Models.Contribution>
+
+@{
+    ViewData["Title"] = "Contribution Index";
+}
+
+<h1>Changes Made By Admins</h1>
+<div class="text-right">
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ChangeMadeBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChangesMade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reason)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reference)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChangedTime)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChangeMadeBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChangesMade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reference)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChangedTime)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<BookMyTrainAdminClientApp.Models.Reach>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+
+<div class="text-right">
+    <a asp-action="Index" asp-controller="Home">Back to Home</a>
+</div>
+<style>
+    .bottomRight {
+        position: fixed;
+        right: 50px;
+        bottom: 50px;
+        z-index: 10;
+    }
+</style>
+
+<a class="bg-primary bottomRight" asp-action="Create" alt="Create New">
+    <img width="35" src="~/plus.svg" />
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StationCodeNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainNumberNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StationCodeNavigation.StationName) (@item.StationCode)
+                </td>
+                <td>
+                    (@item.TrainNumber) @Html.DisplayFor(modelItem => item.TrainNumberNavigation.TrainName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArrivalTime)
+                </td>
+                <td>
+                    <a class="text-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="text-success" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

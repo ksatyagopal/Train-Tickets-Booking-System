@@ -1,0 +1,40 @@
+﻿@model BookMyTrainAdminClientApp.Models.Reach
+
+@{
+    ViewData["Title"] = "Delete Reach";
+}
+
+<h1>Delete Reach</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <div class="text-right">
+        <a asp-action="Index">Back to List</a>
+    </div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StationCodeNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StationCodeNavigation.StationName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TrainNumberNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TrainNumberNavigation.TrainName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ArrivalTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ArrivalTime)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </form>
+</div>

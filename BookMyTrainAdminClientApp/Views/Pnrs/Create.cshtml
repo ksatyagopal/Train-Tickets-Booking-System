@@ -1,0 +1,67 @@
+﻿@model BookMyTrainAdminClientApp.Models.Pnr
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Pnr</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="JourneyDate" class="control-label"></label>
+                <input asp-for="JourneyDate" class="form-control" />
+                <span asp-validation-for="JourneyDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JourneyStartTime" class="control-label"></label>
+                <input asp-for="JourneyStartTime" class="form-control" />
+                <span asp-validation-for="JourneyStartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JourneyEndTime" class="control-label"></label>
+                <input asp-for="JourneyEndTime" class="form-control" />
+                <span asp-validation-for="JourneyEndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfPassengers" class="control-label"></label>
+                <input asp-for="NumberOfPassengers" class="form-control" />
+                <span asp-validation-for="NumberOfPassengers" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalFare" class="control-label"></label>
+                <input asp-for="TotalFare" class="form-control" />
+                <span asp-validation-for="TotalFare" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsDeleted" class="control-label"></label>
+                <input asp-for="IsDeleted" class="form-control" />
+                <span asp-validation-for="IsDeleted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransactionId" class="control-label"></label>
+                <input asp-for="TransactionId" class="form-control" />
+                <span asp-validation-for="TransactionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

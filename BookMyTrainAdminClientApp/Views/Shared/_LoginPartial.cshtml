@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor accessor
+
+@{
+    var adminid = accessor.HttpContext.Session.GetString("adminid");
+    var adminname = accessor.HttpContext.Session.GetString("adminname");
+    var issuperadmin = accessor.HttpContext.Session.GetString("issuperadmin");
+    if (adminid != null)
+    {
+    <div>
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="#" onclick="showProfile()">@adminname</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+    }
+    else
+    {
+        <div>
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                </li>
+            </ul>
+        </div>
+    }
+}

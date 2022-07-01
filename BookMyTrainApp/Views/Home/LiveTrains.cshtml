@@ -1,0 +1,49 @@
+﻿@model IEnumerable<BookMyTrainApp.Models.Reach>
+
+@using BookMyTrainApp.Models;
+@using BookMyTrainApp.Codes;
+@{
+    ViewData["Title"] = "LiveTrains";
+    ReachCodes stations = new();
+    var allstations = stations.List().Result;
+}
+
+<h1>Live Trains</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StationCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in allstations) {
+    if (item.StationCode == ViewBag.selected)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StationCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalTime)
+            </td>
+            <td>
+               
+            </td>
+        </tr>
+    }
+}
+    </tbody>
+</table>

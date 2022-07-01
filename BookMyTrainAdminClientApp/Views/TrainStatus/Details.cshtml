@@ -1,0 +1,90 @@
+﻿@model BookMyTrainAdminClientApp.Models.TrainStatus
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>TrainStatus</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Doj)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Doj)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AcSeats1Booked)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AcSeats1Booked)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AcSeats2Booked)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AcSeats2Booked)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AcSeats3Booked)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AcSeats3Booked)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SlSeatsBooked)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SlSeatsBooked)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SsSeatsBooked)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SsSeatsBooked)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AcSeats1Available)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AcSeats1Available)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AcSeats2Available)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AcSeats2Available)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AcSeats3Available)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AcSeats3Available)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SlSeatsAvailable)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SlSeatsAvailable)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SsSeatsAvailable)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SsSeatsAvailable)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TrainNumberNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TrainNumberNavigation.TrainNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.tsId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BookMyTrain Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    @if (TempData["Message"] != null)
+    {
+
+        <div id="mytoast" class="toast border-dark shadow-lg">
+            <div class="toast-header justify-content-between bg-dark text-light">
+                <strong>Message</strong>
+
+                <div class="text-right">
+                    <button type="button" class="btn btn-dark text-light rounded" onclick="closetoast()">x</button>
+                </div>
+            </div>
+            @if (TempData["typeofmessage"].ToString() == "failed")
+            {
+                <div class="toast-body text-danger">
+                    <p>@TempData["Message"]</p>
+                </div>
+            }
+            else if (TempData["typeofmessage"].ToString() == "success")
+            {
+                <div class="toast-body text-success">
+                    <p>@TempData["Message"]</p>
+                </div>
+            }
+            else if (TempData["typeofmessage"].ToString() == "warning")
+            {
+                <div class="toast-body text-warning">
+                    <p>@TempData["Message"]</p>
+                </div>
+            }
+            else if (TempData["typeofmessage"].ToString() == "info")
+            {
+                <div class="toast-body text-info">
+                    <p>@TempData["Message"]</p>
+                </div>
+            }
+            else
+            {
+                <div class="toast-body text-dark">
+                    <p>@TempData["Message"]</p>
+                </div>
+            }
+
+
+        </div>
+        <style>
+            #mytoast {
+                opacity: 1;
+                z-index: 10;
+                position: fixed;
+                right: 10px;
+                bottom: 10px;
+            }
+        </style>
+        TempData["Message"] = null;
+     }
+
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BookMyTrain Admin</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - BookMyTrain Admin Application - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

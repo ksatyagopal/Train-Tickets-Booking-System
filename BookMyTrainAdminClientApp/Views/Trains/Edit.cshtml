@@ -1,0 +1,169 @@
+﻿@model BookMyTrainAdminClientApp.Models.Train
+
+@{
+    ViewData["Title"] = "Edit Train";
+}
+
+<h1>Edit Train</h1>
+<div class="text-right">
+    <a asp-action="Index">Back to List</a>
+</div>
+<hr />
+<div>
+    <form asp-action="Edit">
+        <div class="d-flex flex-row">
+            <div class="col-md-6 d-flex flex-column">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="TrainNumber" class="control-label"></label>
+                    <input asp-for="TrainNumber" class="form-control" />
+                    <span asp-validation-for="TrainNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TrainName" class="control-label"></label>
+                    <input asp-for="TrainName" class="form-control" />
+                    <span asp-validation-for="TrainName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TrainType" class="control-label"></label>
+                    <select asp-for="TrainType" class="form-control">
+                        <option value="" selected disabled>--select--</option>
+                        <option value="SF">Super Fast Express</option>
+                        <option value="Exp">Express</option>
+                        <option value="Gen">Passenger</option>
+                        <option value="SPL">Special</option>
+                    </select>
+                    <span asp-validation-for="TrainType" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Tsource" class="control-label"></label>
+                    <select asp-for="Tsource" class="form-control" asp-items="ViewBag.Tsource">
+                        <option value="" selected disabled>--select--</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tdestination" class="control-label"></label>
+                    <select asp-for="Tdestination" class="form-control" asp-items="ViewBag.Tdestination">
+                        <option value="" selected disabled>--select--</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ArrivalTime" class="control-label"></label>
+                    <input asp-for="ArrivalTime" class="form-control" />
+                    <span asp-validation-for="ArrivalTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DepartureTime" class="control-label"></label>
+                    <input asp-for="DepartureTime" class="form-control" />
+                    <span asp-validation-for="DepartureTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+                <div class="form-group">
+                    <label asp-for="NAc1Coaches" class="control-label"></label>
+                    <input asp-for="NAc1Coaches" class="form-control" />
+                    <span asp-validation-for="NAc1Coaches" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NAc2Coaches" class="control-label"></label>
+                    <input asp-for="NAc2Coaches" class="form-control" />
+                    <span asp-validation-for="NAc2Coaches" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NAc3Coaches" class="control-label"></label>
+                    <input asp-for="NAc3Coaches" class="form-control" />
+                    <span asp-validation-for="NAc3Coaches" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NSlCoaches" class="control-label"></label>
+                    <input asp-for="NSlCoaches" class="form-control" />
+                    <span asp-validation-for="NSlCoaches" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NSsCoaches" class="control-label"></label>
+                    <input asp-for="NSsCoaches" class="form-control" />
+                    <span asp-validation-for="NSsCoaches" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NGeneralCoaches" class="control-label"></label>
+                    <input asp-for="NGeneralCoaches" class="form-control" />
+                    <span asp-validation-for="NGeneralCoaches" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IsDeleted" class="control-label"></label>
+                    <input asp-for="IsDeleted" class="form-control" />
+                    <span asp-validation-for="IsDeleted" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group m-1">
+            <label asp-for="RunsOn" class="control-label"></label>
+            <input id="runson" asp-for="RunsOn" class="form-control" hidden/>
+            <span asp-validation-for="RunsOn" class="text-danger"></span>
+        </div>
+        <div class="btn-group col-md-8 m-1" role="group" aria-label="Basic checkbox toggle button group">
+            <input type="checkbox" class="btn-check m-1" id="check1" name="ch" onchange="change()">
+            <label class="btn btn-outline-primary" for="check1">Sunday</label>
+
+            <input type="checkbox" class="btn-check m-1" id="check2" name="ch" onchange="change()">
+            <label class="btn btn-outline-primary" for="check2">Monday</label>
+
+            <input type="checkbox" class="btn-check m-1" id="check3" name="ch" onchange="change()">
+            <label class="btn btn-outline-primary" for="check3">Tuesday</label>
+
+            <input type="checkbox" class="btn-check m-1" id="check4" name="ch" onchange="change()">
+            <label class="btn btn-outline-primary" for="check4">Wednesday</label>
+
+            <input type="checkbox" class="btn-check m-1" id="check5" name="ch" onchange="change()">
+            <label class="btn btn-outline-primary" for="check5">Thursday</label>
+
+            <input type="checkbox" class="btn-check m-1" id="check6" name="ch" onchange="change()">
+            <label class="btn btn-outline-primary" for="check6">Friday</label>
+
+            <input type="checkbox" class="btn-check m-1" id="check7" name="ch" onchange="change()">
+            <label class="btn btn-outline-primary" for="check7">Saturday</label>
+        </div>
+        <script type="text/javascript">
+            var value = "";
+            var chs = document.getElementsByName("ch");
+            var runson = document.getElementById("runson");
+            function change() {
+                value = "";
+                for (let i = 0; i < 7; i++) {
+                    if (chs[i].checked == true) {
+                        value = value + 1;
+                    }
+                    else {
+                        value = value + 0;
+                    }
+                }
+                runson.value = value;
+            }
+            window.onload = load();
+            function load() {
+                value = runson.value;
+                for (let i = 0; i < 7; i++) {
+                    if (value[i] == "1") {
+                        chs[i].checked = true;
+                    }
+                    else {
+                        chs[i].checked = false;
+                    }
+                }
+            }
+
+        </script>
+
+        <div class="form-group m-3">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

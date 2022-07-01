@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BookMyTrainAdminClientApp.Models.Station>
+
+@{
+    ViewData["Title"] = "Stations";
+}
+
+<h1>Available Stations</h1>
+
+<div class="d-flex justify-content-between">
+    <a asp-action="Create">Add New Station</a>
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StationCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StationLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HaultTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StationCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StationLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HaultTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDeleted)
+            </td>
+            <td>
+                <a class="text-warning" asp-action="Edit" asp-route-id="@item.StationCode">Edit</a> |
+                <a class="text-info" asp-action="Details" asp-route-id="@item.StationCode">Details</a> |
+                <a class="text-danger" asp-action="Delete" asp-route-id="@item.StationCode">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

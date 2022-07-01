@@ -1,0 +1,181 @@
+﻿@model BookMyTrainAdminClientApp.Models.Train
+
+@{
+    ViewData["Title"] = "Delete Train";
+}
+
+<h1>Delete Train</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <div class="text-right">
+        <a asp-action="Index">Back to List</a>
+    </div>
+    <hr />
+    <div class="d-flex justify-content-between bg-info p-3">
+        <div class="col-lg-6">
+            <table class="table-info table-borderless">
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.TrainNumber)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.TrainNumber)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.TrainName)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.TrainName)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.TrainType)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.TrainType)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.TdestinationNavigation)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.TdestinationNavigation.StationName)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.TsourceNavigation)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.TsourceNavigation.StationName)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.ArrivalTime)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.ArrivalTime)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.DepartureTime)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.DepartureTime)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.AvailableSeats)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.AvailableSeats)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.RunsOn)
+                    </th>
+                    <td class="col-sm-6">
+                        <span id="runson">
+                            @{
+                                string[] days = { "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat" };
+                            }
+                            @if (Model.RunsOn == "1111111")
+                            {
+                                <strong class="text-success">Daily</strong>
+                            }
+                            else
+                            {
+                                @for (int i = 0; i < 7; i++)
+                                {
+                                    if (Model.RunsOn[i] == '1')
+                                    {
+                                        <strong class="text-success">@days[i]</strong>
+                                    }
+                                    else
+                                    {
+                                        <small class="text-dark">@days[i]</small>
+                                    }
+                                }
+                            }
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-lg-6">
+            <table class="table-info table-borderless">
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.NAc1Coaches)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.NAc1Coaches)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.NAc2Coaches)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.NAc2Coaches)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.NAc3Coaches)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.NAc3Coaches)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.NSlCoaches)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.NSlCoaches)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.NSsCoaches)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.NSsCoaches)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.NGeneralCoaches)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.NGeneralCoaches)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.IsDeleted)
+                    </th>
+                    <td class="col-sm-6">
+                        @Html.DisplayFor(model => model.IsDeleted)
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<form class="m-3" asp-action="Delete">
+    <input type="hidden" asp-for="TrainNumber" />
+    <input type="submit" value="Delete" class="btn btn-danger" />
+</form>
+

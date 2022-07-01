@@ -1,0 +1,71 @@
+﻿@model IEnumerable<BookMyTrainAdminClientApp.Models.TrainStatus>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="d-flex justify-content-between">
+    <a asp-action="Create">Create New</a>
+    <a asp-action="Index" asp-controller="Home">Back to Home</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Doj)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainNumberNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcSeats1Booked)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcSeats2Booked)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcSeats3Booked)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SlSeatsBooked)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SsSeatsBooked)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainNumberNavigation.TrainNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doj)
+            </td>
+            <td>
+                @item.AcSeats1Booked / @item.AcSeats1Available
+            </td>
+            <td>
+                @item.AcSeats2Booked / @item.AcSeats2Available
+            </td>
+            <td>
+                @item.AcSeats3Booked / @item.AcSeats3Available
+            </td>
+            <td>
+                @item.SlSeatsBooked / @item.SlSeatsAvailable
+            </td>
+            <td>
+                @item.SsSeatsBooked / @item.SsSeatsAvailable
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.tsId">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

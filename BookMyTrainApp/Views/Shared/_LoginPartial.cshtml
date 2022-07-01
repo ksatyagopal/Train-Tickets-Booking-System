@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor accessor
+
+@{
+    var userid = accessor.HttpContext.Session.GetString("userid");
+    var username = accessor.HttpContext.Session.GetString("username");
+    if (userid != null)
+    {
+        <div>
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#" onclick="showProfile()">@username</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" asp-area="" asp-controller="Users" asp-action="Logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div>
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-light" asp-area="" asp-controller="Users" asp-action="Login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" asp-area="" asp-controller="Users" asp-action="Register">Register</a>
+                </li>
+            </ul>
+        </div>
+    }
+}

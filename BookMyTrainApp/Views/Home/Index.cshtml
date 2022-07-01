@@ -1,0 +1,94 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <div class="row my-3">
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="BookTicket" asp-action="Index" class="btn btn-secondary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Book Ticket</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="Pnrs" asp-action="Index" class="btn btn-primary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>My Bookings</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="Pnrs" asp-action="Index" class="btn btn-info m-md-3">
+                    <div class="card-body text-center">
+                        <h5>PNR Enquiry</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="Fares" asp-action="Index" class="btn btn-dark m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Last Transactions</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a class="btn btn-success m-md-3" asp-controller="StationDistances" asp-action="Index">
+                    <div class="card-body text-center">
+                        <h5>Upcoming Journey</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a class="btn btn-warning m-md-3" asp-controller="Tickets" asp-action="Index">
+                    <div class="card-body text-center">
+                        <h5>Cancel Ticket</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Track Your Train</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>My Account</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-action="LiveStation" asp-controller="Home" class="btn btn-danger m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Live Station</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

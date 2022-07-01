@@ -1,0 +1,222 @@
+﻿@model List<BookMyTrainApp.Models.Ticket>
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor accessor; 
+
+@using BookMyTrainApp.Codes;
+@using BookMyTrainApp.Models;
+@{
+    ViewData["Title"] = "Confirm Booking";
+    SearchTrains st = new();
+    TrainCodes trains = new();
+    ReachCodes reaches = new();
+    StationCodes stations = new();
+    StationDistanceCodes stDists = new();
+    TrainStatusCodes tsCodes = new();
+    FareCodes fares = new();
+    Train train = trains.GetTrainByNumber((int)TempData.Peek("tNumber")).Result;
+    string TName = train.TrainName;
+    string from = TempData.Peek("from").ToString();
+    string to = TempData.Peek("to").ToString();
+    string jDate = TempData.Peek("jDate").ToString();
+    string toc = TempData.Peek("toc").ToString();
+}
+
+<div class="my-2 border border-dark rounded">
+    <div class="d-flex flex-row">
+        <div class="col-4">
+            <p class="fs-4">@TName</p>
+            <big>#@train.TrainNumber</big> |
+            <small>Runs On:</small>
+            @{
+                string[] days = { "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat" };
+            }
+            @if (train.RunsOn == "1111111")
+            {
+                <strong class="text-success">Daily</strong>
+            }
+            else
+            {
+                @for (int i = 0; i < 7; i++)
+                {
+                    if (train.RunsOn[i] == '1')
+                    {
+                        <strong class="text-success">@days[i]</strong>
+                    }
+                    else
+                    {
+                        <small class="text-dark">@days[i]</small>
+                    }
+                }
+            }
+        </div>
+        <div class="col-8 d-flex justify-content-center m-2">
+            @{
+                var start = reaches.List().Result.Find(r => (r.TrainNumber == train.TrainNumber && r.StationCode == from)).ArrivalTime;
+                var end = reaches.List().Result.Find(r => (r.TrainNumber == train.TrainNumber && r.StationCode == to)).ArrivalTime;
+                var dMinutes = 0.0;
+                if (String.Compare(end, start) < 0)
+                {
+                    dMinutes = TimeSpan.Parse(end).Subtract(TimeSpan.Parse("00:00")).TotalMinutes +
+                        TimeSpan.Parse("23:59").Subtract(TimeSpan.Parse(start)).TotalMinutes;
+                }
+                else
+                {
+                    dMinutes = TimeSpan.Parse(end).Subtract(TimeSpan.Parse(start)).TotalMinutes;
+                }
+                var distances = stDists.List().Result;
+                var minutes = dMinutes % 60;
+                var hours = (dMinutes - minutes) / 60;
+                int Distance(int tNo, string startT, string endT)
+                {
+                    int dist = 0;
+                    List<string> allStationBtw = new();
+                    var order = reaches.List().Result.FindAll(r => r.TrainNumber == tNo).OrderBy(r => r.ArrivalTime);
+                    var found = false;
+                    foreach (var i in order)
+                    {
+                        if (i.StationCode == startT)
+                        {
+                            found = true;
+                        }
+                        if (found)
+                        {
+                            allStationBtw.Add(i.StationCode);
+                        }
+                        if (i.StationCode == endT)
+                        {
+                            found = false;
+                        }
+                    }
+                    for (int i = 0; i < allStationBtw.Count - 1; i++)
+                    {
+                        var a = distances.Find(d => (d.StationA == allStationBtw[i] && d.StationB == allStationBtw[i + 1]));
+                        var b = distances.Find(d => (d.StationB == allStationBtw[i] && d.StationA == allStationBtw[i + 1]));
+                        if (a == null && b != null)
+                        {
+                            dist = dist + (int)b.Distance;
+                        }
+                        if (a != null && b == null)
+                        {
+                            dist = dist + (int)a.Distance;
+                        }
+                    }
+                    return dist;
+                }
+
+            }
+            <div class="m-1 p-1">
+                <p><strong>@start</strong></p>
+                <small>@stations.GetStationByCode(from).Result.StationName (@from)</small>
+            </div>
+            <div class="m-1 p-1">
+                <p>--- <strong> @hours hrs : @minutes mins </strong> ---</p>
+            </div>
+            <div class="m-1 p-1">
+                <p><strong>@end</strong></p>
+                <small>@stations.GetStationByCode(to).Result.StationName (@to)</small>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="d-flex flex-row justify-content-start">
+        @{
+            int distance = Distance(train.TrainNumber, from, to);
+            TrainStatus tStatus = tsCodes.CheckTrainStatus(DateTime.Parse(jDate), train.TrainNumber).Result;
+            var fare = Convert.ToInt32(distance * fares.GetMoneyByCoachType(toc).Result.Fare1);
+            TempData["fare"] = fare;
+            TempData["distance"] = distance;
+            distance = (int)TempData.Peek("distance");
+            fare = (int)TempData.Peek("fare");
+            accessor.HttpContext.Session.SetString("fare", fare.ToString());
+            }
+
+        <div class="col-4 m-2">
+            <div class="d-flex flex-row justify-content-between">
+                <span>1AC</span>
+                <strong>₹ @fare</strong>
+            </div>
+            <div>
+                <p class="text-success">Available @tStatus.AcSeats1Available</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<hr />
+<br />
+
+<form class="form" asp-action="Payment" method="post">
+    <div class="d-flex flex-column">
+        <div>Passenger 1</div>
+        <div id="div0" class="d-flex flex-row">
+            <div>
+                <label>Passenger Name</label>
+                <input class="form-control" asp-for="@Model[0].PassengerName" required />
+            </div>
+            <div>
+                <label>Age</label>
+                <input class="form-control" asp-for="@Model[0].Age" required />
+            </div>
+            <div>
+                <label>Gender</label>
+                <select class="form-control" asp-for="@Model[0].Gender" required>
+                    <option selected disabled>--select--</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="O">Others</option>
+                </select>
+            </div>
+            <br />
+        </div>
+        @for (var i = 1; i < 6; i++)
+        {
+            <div>Passenger @(i+1)</div>
+            <div id="div@(i)" class="d-flex flex-row">
+                <div>
+                    <label>Name</label>
+                    <input class="form-control" asp-for="@Model[i].PassengerName" />
+                </div>
+                <div>
+                    <label>Age</label>
+                    <input class="form-control" asp-for="@Model[i].Age" />
+                </div>
+                <div>
+                    <label>Gender</label>
+                    <select class="form-control" asp-for="@Model[i].Gender">
+                        <option selected disabled>--select--</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                        <option value="O">Others</option>
+                    </select>
+                </div>
+                <br />
+            </div>
+        }
+    </div>
+    <input type="submit" class="btn btn-primary" value="Proceed to Payment">
+</form>
+<script type="text/javascript">
+    const div0 = document.getElementById('div0');
+    const div1 = document.getElementById('div1');
+    const div2 = document.getElementById('div2');
+    const div3 = document.getElementById('div3');
+    const div4 = document.getElementById('div4');
+    const div5 = document.getElementById('div5');
+    div0.addEventListener('click', function handleClick() {
+        if (div1.style.display === 'none') {div1.style.display = 'block';}
+    });
+    div1.addEventListener('click', function handleClick() {
+        if (div2.style.display === 'none') { div2.style.display = 'block'; }
+    });
+    div2.addEventListener('click', function handleClick() {
+        if (div3.style.display === 'none') { div3.style.display = 'block'; }
+    });
+    div3.addEventListener('click', function handleClick() {
+        if (div4.style.display === 'none') { div4.style.display = 'block'; }
+    });
+    div4.addEventListener('click', function handleClick() {
+        if (div5.style.display === 'none') { div5.style.display = 'block'; }
+    });
+</script>

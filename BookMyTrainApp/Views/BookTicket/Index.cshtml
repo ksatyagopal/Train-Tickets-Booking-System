@@ -1,0 +1,87 @@
+﻿@model BookMyTrainApp.Models.SearchTrains
+
+
+@{
+
+    ViewData["Title"] = "Search Trains";
+}
+
+<div class="d-flex justify-content-center my-4 border border-dark rounded">
+    <form asp-action="Search" class="m-4">
+        <div class="d-flex flex-row justify-content-around">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group border border-secondary rounded-left col-5 h-100">
+                <label asp-for="From" class="control-label"></label>
+                <input id="from" asp-for="From" class="form-control font-weight-bold fs-5 border-0" onchange="fN()" list="stations" placeholder="Enter Station Name / Code" required/>
+                <span class="text-info" id="fName">&nbsp;</span>
+                <span asp-validation-for="From" class="text-danger"></span>
+            </div>
+            <div class="border-0">
+                <a class="btn btn-outline-primary my-4" onclick="swap()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
+                    </svg>
+                </a>
+            </div>
+            <div class="form-group border border-secondary col-5 h-100">
+                <label asp-for="To" class="control-label"></label>
+                <input id="to" asp-for="To" class="form-control font-weight-bold fs-5 border-0" onchange="tN()" list="stations" placeholder="Enter Station Name / Code" required/>
+                <span class="text-info" id="tName">&nbsp;</span>
+                <span asp-validation-for="To" class="text-danger"></span>
+            </div>
+            <div class="form-group border border-secondary rounded-right col-3 h-100 arrow">
+                <label asp-for="JDate" class="control-label"></label>
+                <input asp-for="JDate" id="jDate" class="form-control font-weight-bold fs-5 border-0" onchange="jD()" required/>
+                <span class="text-info" id="date">&nbsp;</span>
+                <span asp-validation-for="JDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group d-flex justify-content-center">
+            <input type="submit" value="Search" class="btn btn-primary rounded fs-5 col-4 font-weight-bold" />
+        </div>
+    </form>
+    <datalist class="list-group" id="stations" autocomplete="on" hidden>
+        @foreach (var item in ViewBag.stations)
+        {
+            <option value="@item.StationCode">@item.StationName</option>
+        }
+    </datalist>
+</div>
+<script type="text/javascript">
+    var today = new Date();
+    var from = document.getElementById("jDate");
+    from.setAttribute("min", today.toISOString().split("T")[0]);
+    var date = document.getElementById("jDate");
+    var from = document.getElementById("from");
+    var to = document.getElementById("to");
+    var sfName = document.getElementById("fName");
+    var stName = document.getElementById("tName");
+    var sdate = document.getElementById("date");
+    function dss() {
+        var values = {};
+        values[""] = "...";
+        for (let item of document.getElementsByTagName("option")) {
+            values[item.value] = item.innerHTML;
+        }
+        return values;
+    }
+    function tN() {
+        var values = dss();
+        stName.innerHTML = values[to.value];
+    }
+    function fN() {
+        var values = dss();
+        sfName.innerHTML = values[from.value];
+    }
+    function jD() {
+        sdate.innerHTML = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(date.value).getDay()];
+    }
+    function swap() {
+        var temp = to.value;
+        to.value = from.value;
+        from.value = temp;
+        var temp1 = stName.innerHTML;
+        stName.innerHTML = sfName.innerHTML;
+        sfName.innerHTML = temp1;
+    }
+</script>

@@ -1,0 +1,181 @@
+﻿@model BookMyTrainApp.Models.User
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor accessor
+
+@{
+    ViewData["Title"] = "Home Page";
+    var adminid = accessor.HttpContext.Session.GetString("userid");
+    var adminname = accessor.HttpContext.Session.GetString("username");
+    var issuperadmin = accessor.HttpContext.Session.GetString("issuperadmin");
+}
+@if (issuperadmin == true.ToString())
+{
+    <div class="text-center">
+        <div class="row my-3">
+            <div class="col-sm-4">
+                <div class="card">
+                    <a asp-controller="Admins" asp-action="Index" class="btn btn-primary m-md-3">
+                        <div class="card-body text-center">
+                            <h5>View Admins</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <a asp-controller="Admins" asp-action="Create" class="btn btn-secondary m-md-3">
+                        <div class="card-body text-center">
+                            <h5>Add New Admin</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <a asp-controller="Contributions" asp-action="Index" class="btn btn-primary m-md-3">
+                        <div class="card-body text-center">
+                            <h5>Changes Made By Admins</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="text-center">
+    <div class="row my-3">
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="Trains" asp-action="Index" class="btn btn-secondary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Trains</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="Stations" asp-action="Index" class="btn btn-primary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Stations</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="TrainStatus" asp-action="Index" class="btn btn-info m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Train Status</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="Fares" asp-action="Index" class="btn btn-dark m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Ticket Fares</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a class="btn btn-success m-md-3" asp-controller="StationDistances" asp-action="Index">
+                    <div class="card-body text-center">
+                        <h5>Station Distances</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a class="btn btn-warning m-md-3" asp-controller="Tickets" asp-action="Index">
+                    <div class="card-body text-center">
+                        <h5>Tickets</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="Reaches" asp-action="Index" class="btn btn-secondary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Reaches</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="Users" asp-action="Index" class="btn btn-primary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Users</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-action="PageNotFound" class="btn btn-danger m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Reset Password</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="row my-3">
+        <div class="col-sm-4">
+            <div class="card">
+                <a href="#" class="btn btn-primary m-md-3" onclick="showProfile()">
+                    <div class="card-body text-center">
+                        <h5>My Profile</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+    </div>*@
+</div>
+@{ 
+    
+    <div id="profileToast" class="toast border-dark">
+        <div class="toast-header justify-content-between">
+            <strong>Profile</strong>
+            <div class="text-right">
+                <button type="button" class="btn btn-dark text-light rounded" onclick="closeProfileToast()">x</button>
+            </div>
+        </div>
+        <div class="toast-body text-dark">
+            <h3>@Model.UserId</h3>
+            <p>ID: <strong class="text-info">@Model.UserId</strong></p>
+            <p>Email ID : <strong class="text-info">@Model.FirstName</strong></p>
+            <p>Last Logged On: <strong class="text-info">@Model.LastLoggedInDate</strong></p>
+            <a href="#">Change Password</a>
+        </div>
+    </div>
+    <style>
+        #profileToast {
+            opacity: 0;
+            z-index: -10;
+            position: absolute;
+            right: 35%;
+            left: 35%;
+            top: 25%;
+        }
+
+        .buttonneo {
+            border-radius: 25px;
+            background: #e0e0e0;
+            box-shadow: 49px 49px 98px #5a5a5a, -49px -49px 98px #ffffff;
+        }
+
+    </style>
+}

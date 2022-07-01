@@ -1,0 +1,29 @@
+﻿@model BookMyTrainAdminClientApp.Models.Fare
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details of Fare</h1>
+<div class="d-flex justify-content-between">
+    <a asp-action="Edit" asp-route-id="@Model.TypeOfCoach">Edit</a>
+    <a asp-action="Index">Back to List</a>
+</div>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TypeOfCoach)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TypeOfCoach)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Fare1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fare1)
+        </dd>
+    </dl>
+</div>
+

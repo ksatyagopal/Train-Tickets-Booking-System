@@ -1,0 +1,321 @@
+﻿@model IEnumerable<BookMyTrainApp.Models.Train>
+@using BookMyTrainApp.Models; 
+@using BookMyTrainApp.Codes;
+@{
+    ViewData["Title"] = "Search";
+    SearchTrains st = new();
+    TrainCodes trains = new();
+    ReachCodes reaches = new();
+    StationDistanceCodes stDists = new();
+    TrainStatusCodes tsCodes = new();
+    FareCodes fares = new();
+}
+
+
+<div class="d-flex justify-content-center bg-dark rounded">
+    <form action="/Bookticket/Search" method="post">
+        <div class="d-flex flex-row justify-content-around">
+            <div class="form-group col-3">
+                <label for="sFrom" class="control-label text-primary">From</label>
+                <input value="@ViewBag.search.From" id="from" name="From" class="form-control font-weight-bold fs-6 border-0"  onchange="fN()" list="stations" placeholder="Station Name / Code" />
+                <span class="text-light" id="fName">@ViewBag.fromName</span>
+            </div>
+            <div class="border-0">
+                <a class="btn btn-primary my-4" onclick="swap()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
+                    </svg>
+                </a>
+            </div>
+            <div class="form-group bg-dark col-3">
+                <label for="sTo" class="control-label text-primary">To</label>
+                <input value="@ViewBag.search.To" id="to" name="To" class="form-control font-weight-bold fs-6 border-0" onchange="tN()" list="stations" placeholder="Station Name / Code" />
+                <span class="text-light" id="tName">@ViewBag.toName</span>
+            </div>
+            <div class="form-group col-3">
+                <label for="JDate" class="control-label text-primary">Journey Date</label>
+                <input value="@ViewBag.search.JDate.ToString("yyyy-MM-dd")" type="date" name="JDate" id="jDate" class="form-control font-weight-bold fs-6 border-0" onchange="jD()"/>
+                <span class="text-light" id="date">&nbsp;</span>
+            </div>
+            <div class="form-group border-0">
+                <input type="submit" value="Search" class="btn btn-primary my-4 rounded fs-5 font-weight-bold" />
+            </div>
+        </div>
+        
+    </form>
+    <datalist class="list-group" id="stations" autocomplete="on" hidden>
+        @foreach (var item in ViewBag.stations)
+        {
+            <option value="@item.StationCode">@item.StationName</option>
+        }
+    </datalist>
+</div>
+<script type="text/javascript">
+    var today = new Date();
+    var from = document.getElementById("jDate");
+    from.setAttribute("min", today.toISOString().split("T")[0]);
+    var date = document.getElementById("jDate");
+    var from = document.getElementById("from");
+    var to = document.getElementById("to");
+    var sfName = document.getElementById("fName");
+    var stName = document.getElementById("tName");
+    var sdate = document.getElementById("date");
+    function dss() {
+        var values = {};
+        values[""] = "...";
+        for (let item of document.getElementsByTagName("option")) {
+            values[item.value] = item.innerHTML;
+        }
+        return values;
+    }
+    function tN() {
+        var values = dss();
+        if (values[to.value] == undefined)
+            stName.innerHTML = "No Station Found"
+        else
+            stName.innerHTML = values[to.value];
+    }
+    function fN() {
+        var values = dss();
+        if (values[to.value] == undefined)
+            ssName.innerHTML = "No Station Found"
+        else
+            sfName.innerHTML = values[from.value];
+    }
+    function jD() {
+        sdate.innerHTML = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(date.value).getDay()];
+    }
+
+    document.addEventListener("DOMContentLoaded", jD());
+
+    function swap() {
+        var temp = to.value;
+        to.value = from.value;
+        from.value = temp;
+        var temp1 = stName.innerHTML;
+        stName.innerHTML = sfName.innerHTML;
+        sfName.innerHTML = temp1;
+    }
+</script>
+
+
+@foreach (var item in Model)
+{
+    var running = false;
+    if (item.RunsOn[(int)ViewBag.search.JDate.DayOfWeek] == '1') { running = true; }
+    <div class="my-2 border border-dark rounded">
+        <div class="d-flex flex-row">
+            <div class="col-4">
+                <p class="fs-4">@item.TrainName</p>
+                <small>#@item.TrainNumber</small> |
+                <small>Runs On:</small>
+                @{
+                    string[] days = { "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat" };
+                }
+                @if (item.RunsOn == "1111111")
+                {
+                    <strong class="text-success">Daily</strong>
+                }
+                else
+                {
+                    @for (int i = 0; i < 7; i++)
+                    {
+                        if (item.RunsOn[i] == '1')
+                        {
+                            <strong class="text-success">@days[i]</strong>
+                        }
+                        else
+                        {
+                            <small class="text-dark">@days[i]</small>
+                        }
+                    }
+                }
+            </div>
+            <div class="col-8 d-flex justify-content-center m-2">
+                @{
+                    var start = reaches.List().Result.Find(r => (r.TrainNumber == item.TrainNumber && r.StationCode == ViewBag.search.From)).ArrivalTime;
+                    var end = reaches.List().Result.Find(r => (r.TrainNumber == item.TrainNumber && r.StationCode == ViewBag.search.To)).ArrivalTime;
+                    var dMinutes = 0.0;
+                    if (String.Compare(end, start) < 0)
+                    {
+                        dMinutes = TimeSpan.Parse(end).Subtract(TimeSpan.Parse("00:00")).TotalMinutes +
+                            TimeSpan.Parse("23:59").Subtract(TimeSpan.Parse(start)).TotalMinutes;
+                    }
+                    else
+                    {
+                        dMinutes = TimeSpan.Parse(end).Subtract(TimeSpan.Parse(start)).TotalMinutes;
+                    }
+                    var distances = stDists.List().Result;
+                    var minutes = dMinutes % 60;
+                    var hours = (dMinutes - minutes) / 60;
+                    int Distance(int tNo, string startT, string endT)
+                    {
+                        int dist = 0;
+                        List<string> allStationBtw = new();
+                        var order = reaches.List().Result.FindAll(r => r.TrainNumber == tNo).OrderBy(r => r.ArrivalTime);
+                        var found = false;
+                        foreach (var i in order)
+                        {
+                            if (i.StationCode == startT)
+                            {
+                                found = true;
+                            }
+                            if (found)
+                            {
+                                allStationBtw.Add(i.StationCode);
+                            }
+                            if (i.StationCode == endT)
+                            {
+                                found = false;
+                            }
+                        }
+                        for (int i = 0; i < allStationBtw.Count - 1; i++)
+                        {
+                            var a = distances.Find(d => (d.StationA == allStationBtw[i] && d.StationB == allStationBtw[i + 1]));
+                            var b = distances.Find(d => (d.StationB == allStationBtw[i] && d.StationA == allStationBtw[i + 1]));
+                            if (a == null && b != null)
+                            {
+                                dist = dist + (int)b.Distance;
+                            }
+                            if (a != null && b == null)
+                            {
+                                dist = dist + (int)a.Distance;
+                            }
+                        }
+                        return dist;
+                    }
+
+                }
+                <div class="m-1 p-1">
+                    <p><strong>@start</strong></p>
+                    <small>@ViewBag.fromName (@ViewBag.search.From)</small>
+                </div>
+                <div class="m-1 p-1">
+                    <p>--- <strong> @hours hrs : @minutes mins </strong> ---</p>
+                </div>
+                <div class="m-1 p-1">
+                    <p><strong>@end</strong></p>
+                    <small>@ViewBag.toName (@ViewBag.search.To)</small>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="d-flex flex-row justify-content-start">
+            @{
+                int distance = Distance(item.TrainNumber, ViewBag.search.From, ViewBag.search.To);
+                TrainStatus tStatus = tsCodes.CheckTrainStatus(ViewBag.search.JDate, item.TrainNumber).Result;
+                TempData["distance"] = distance;
+            }
+            @if (!running)
+            {
+                <p class="text-danger m-2">Train not running on selected date</p>
+            }
+            @if (running && item.NAc1Coaches != 0)
+            {
+                <a class="btn m-md-3 border border-secondary"
+                   asp-controller="BookTicket"
+                   asp-action="Booking"
+                   asp-route-tNumber="@item.TrainNumber"
+                   asp-route-from="@ViewBag.search.From"
+                   asp-route-to="@ViewBag.search.To"
+                   asp-route-jdate="@ViewBag.search.JDate"
+                   asp-route-toc="AC1">
+                    <div class="col-4 m-2">
+                        <div class="d-flex flex-row justify-content-between">
+                            <span>1AC</span>
+                            <strong>₹ @Convert.ToInt32(distance*fares.GetMoneyByCoachType("AC1").Result.Fare1)</strong>
+                        </div>
+                        <div>
+                            <p class="text-success">Available @tStatus.AcSeats1Available</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            @if (running && item.NAc2Coaches != 0)
+            {
+                <a class="btn m-md-3 border border-secondary"
+                   asp-controller="BookTicket"
+                   asp-action="Booking"
+                   asp-route-tNumber="@item.TrainNumber"
+                   asp-route-from="@ViewBag.search.From"
+                   asp-route-to="@ViewBag.search.To"
+                   asp-route-jdate="@ViewBag.search.JDate"
+                   asp-route-toc="AC2">
+                    <div class="col-4 m-2">
+                        <div class="d-flex justify-content-between">
+                            <p>2AC</p>
+                            <strong>₹ @Convert.ToInt32(distance*fares.GetMoneyByCoachType("AC2").Result.Fare1)</strong>
+                        </div>
+                        <div>
+                            <p class="text-success">Available @tStatus.AcSeats2Available</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            @if (running && item.NAc3Coaches != 0)
+            {
+                <a class="btn m-md-3 border border-secondary"
+                   asp-controller="BookTicket"
+                   asp-action="Booking"
+                   asp-route-tNumber="@item.TrainNumber"
+                   asp-route-from="@ViewBag.search.From"
+                   asp-route-to="@ViewBag.search.To"
+                   asp-route-jdate="@ViewBag.search.JDate"
+                   asp-route-toc="AC3">
+                    <div class="col-4 m-2">
+                        <div class="d-flex justify-content-between">
+                            <p>3AC</p>
+                            <strong>₹ @Convert.ToInt32(distance*fares.GetMoneyByCoachType("AC3").Result.Fare1)</strong>
+                        </div>
+                        <div>
+                            <p class="text-success">Available @tStatus.AcSeats3Available</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            @if (running && item.NSlCoaches != 0)
+            {
+                <a class="btn m-md-3 border border-secondary"
+                   asp-controller="BookTicket"
+                   asp-action="Booking"
+                   asp-route-tNumber="@item.TrainNumber"
+                   asp-route-from="@ViewBag.search.From"
+                   asp-route-to="@ViewBag.search.To"
+                   asp-route-jdate="@ViewBag.search.JDate"
+                   asp-route-toc="SL">
+                    <div class="col-4 m-2 ">
+                        <div class="d-flex justify-content-between">
+                            <p>SL</p>
+                            <strong>₹ @Convert.ToInt32(distance*fares.GetMoneyByCoachType("SL").Result.Fare1)</strong>
+                        </div>
+                        <div>
+                            <p class="text-success">Available @tStatus.SlSeatsAvailable</p>
+                        </div>
+                    </div>
+                </a>
+            }
+            @if (running && item.NSsCoaches != 0)
+            {
+                <a class="btn m-md-3 border border-secondary"
+                   asp-controller="BookTicket"
+                   asp-action="Booking"
+                   asp-route-tNumber="@item.TrainNumber"
+                   asp-route-from="@ViewBag.search.From"
+                   asp-route-to="@ViewBag.search.To"
+                   asp-route-jdate="@ViewBag.search.JDate"
+                   asp-route-toc="SS">
+                    <div class="col-4 m-2 ">
+                        <div class="d-flex justify-content-between">
+                            <p>SS</p>
+                            <strong>₹ @Convert.ToInt32(distance*fares.GetMoneyByCoachType("SS").Result.Fare1)</strong>
+                        </div>
+                        <div>
+                            <p class="text-success">Available @tStatus.SsSeatsAvailable</p>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+
+}

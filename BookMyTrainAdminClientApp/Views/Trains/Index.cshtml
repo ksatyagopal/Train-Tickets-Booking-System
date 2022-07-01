@@ -1,0 +1,125 @@
+﻿@model IEnumerable<BookMyTrainAdminClientApp.Models.Train>
+
+@{
+    ViewData["Title"] = "Trains";
+}
+
+<h1>All Trains Available</h1>
+
+<div class="text-right">
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>
+<style>
+    .bottomRight {
+        position: fixed;
+        right: 50px;
+        bottom: 50px;
+        z-index: 10;
+    }
+</style>
+<a class="bg-primary bottomRight" asp-action="Create" alt="Add New Train">
+    <img width="35" src="~/plus.svg" />
+</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartureTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvailableSeats)
+            </th>
+            <th>
+                Number of Coaches
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RunsOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailableSeats)
+            </td>
+            <td>
+                @{
+                    var count = item.NAc1Coaches +
+                                item.NAc2Coaches +
+                                item.NAc3Coaches +
+                                item.NGeneralCoaches +
+                                item.NSlCoaches +
+                                item.NSsCoaches;
+                 }
+                @count
+            </td>
+            <td>
+                <span id="runson">
+                    @{
+                        string[] days = { "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat" };
+                    }
+                    @if (item.RunsOn == "1111111")
+                    {
+                        <strong class="text-success">Daily</strong>
+                    }
+                    else
+                    {
+                        @for (int i = 0; i < 7; i++)
+                        {
+                            if (item.RunsOn[i] == '1')
+                            {
+                                <strong class="text-success">@days[i]</strong>
+                            }
+                            else
+                            {
+                                <small class="text-dark">@days[i]</small>
+                            }
+                        }
+                    }
+                </span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDeleted)
+            </td>
+            <td>
+                <a class="text-warning" asp-action="Edit" asp-route-id="@item.TrainNumber">Edit</a> |
+                <a class="text-info" asp-action="Details" asp-route-id="@item.TrainNumber">Details</a> |
+                <a class="text-danger" asp-action="Delete" asp-route-id="@item.TrainNumber">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

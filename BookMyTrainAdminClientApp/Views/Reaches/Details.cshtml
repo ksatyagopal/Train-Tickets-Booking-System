@@ -1,0 +1,48 @@
+﻿@model BookMyTrainAdminClientApp.Models.Reach
+
+@{
+    ViewData["Title"] = "Reach Details";
+}
+
+<h1>Details</h1>
+
+<div class="text-right">
+    <a asp-action="Index">Back to List</a>
+</div>
+<style>
+    .bottomRight {
+        position: fixed;
+        right: 50px;
+        bottom: 50px;
+        z-index: 10;
+    }
+</style>
+
+<a class="bg-primary bottomRight" asp-action="Edit" asp-route-id="@Model.Id" alt="Edit">
+    <img width="35" src="~/edit.svg" />
+</a>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StationCodeNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StationCodeNavigation.StationName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TrainNumberNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TrainNumberNavigation.TrainName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ArrivalTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ArrivalTime)
+        </dd>
+    </dl>
+</div>
+

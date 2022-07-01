@@ -1,0 +1,24 @@
+﻿
+
+<div>
+    <p>Amount: @TempData["fare"].ToString()</p>
+    <form action="/BookTicket/PaymentDetails" method="post">
+        <div class="d-flex justify-content-center">
+            <h1>DigitalBank App UPI payment</h1>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div>
+                    <label for="mobile">Enter Mobile Number</label>
+                    <input type="tel" name="mobile" />
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row justify-content-center">
+            <button type="submit" class="btn btn-primary col-2" >Proceed</button>
+        </div>
+        <span id="note" class="text-danger"><small>This page waits for 5 Minutes only, don't reload or redirect.</small></span>
+    </form>
+    
+</div>
+

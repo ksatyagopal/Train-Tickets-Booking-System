@@ -1,0 +1,89 @@
+﻿@model IEnumerable<BookMyTrainAdminClientApp.Models.Admin>
+
+@{
+    ViewData["Title"] = "Admin Index";
+}
+
+<h1>Admins</h1>
+
+<div class="text-right">
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>
+<style>
+    .bottomRight {
+        position: fixed;
+        right: 50px;
+        bottom: 50px;
+        z-index: 10;
+    }
+</style>
+<a class="bg-primary bottomRight" asp-action="Create" alt="Add New Admin">
+    <img width="35" src="~/plus.svg" />
+</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AdminId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdminName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsSuperAdmin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastLoggedInDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsLocked)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdminId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdminName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsSuperAdmin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastLoggedInDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDeleted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsLocked)
+                </td>
+                <td>
+                    <a asp-controller="Admins" asp-action="Edit" asp-route-id="@item.AdminId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.AdminId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.AdminId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
