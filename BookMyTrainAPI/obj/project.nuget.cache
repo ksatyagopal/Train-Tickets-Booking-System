@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "N4XlqKvMRdajTZO/U8ulVfl+5qHJ+s6UB9v0DzjPkNb5hU5ZgVaz0jaG+hceej5gcM08ybzoq7TohCwKWdjNlQ==",
+  "dgSpecHash": "ne9L1xzmz//F0l2qJR9GcG6GTm6WBye7/2bu9ECooe3+mvC0QQgQE66AjUr67pTF5LncRxKtSAYmsVagFiOKsQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\Desktop\\Eurofins\\WebApps\\TrainTicketsBookingSystem\\BookMyTrainAPI\\BookMyTrainAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\bcrypt.net-next\\4.0.0\\bcrypt.net-next.4.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",

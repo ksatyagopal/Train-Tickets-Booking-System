@@ -27,6 +27,7 @@ namespace BookMyTrainAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddScoped<BookMyTrainDBContext>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -46,7 +47,7 @@ namespace BookMyTrainAPI
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors(options=>options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseRouting();
 
             app.UseAuthorization();

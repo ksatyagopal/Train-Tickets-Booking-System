@@ -9,7 +9,7 @@ using BookMyTrainAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace AdminAPI.Codes
+namespace BookMyTrainAPI.Codes
 {
     public class StationDistanceCodes
     {

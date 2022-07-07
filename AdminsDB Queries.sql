@@ -22,6 +22,3 @@ ChangedTime DATETIME,
 Reason NVARCHAR(MAX)
 )
 
-use AdminsDB
-select * from Admins
-delete from Admins where AdminID=12356

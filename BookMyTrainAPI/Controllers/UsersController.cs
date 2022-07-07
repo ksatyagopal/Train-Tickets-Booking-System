@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookMyTrainAPI.Models;
+using BookMyTrainAPI.Codes;
 
 namespace BookMyTrainAPI.Controllers
 {
@@ -14,6 +15,8 @@ namespace BookMyTrainAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly BookMyTrainDBContext _context;
+        private readonly Codes.Codes codes = new();
+        
 
         public UsersController(BookMyTrainDBContext context)
         {
@@ -39,6 +42,24 @@ namespace BookMyTrainAPI.Controllers
             }
 
             return user;
+        }
+
+        [HttpPost("ValidateUser")]
+        public async Task<ActionResult<string>> ValidateUser(User u)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u=>u.MailId == u.MailId);
+
+            if (user == null)
+            {
+                return "NotFound";
+            }
+
+            if(codes.Verify(user.Password, u.Password))
+            {
+                return "InValid";
+            }
+
+            return user.UserId.ToString();
         }
 
         // PUT: api/Users/5

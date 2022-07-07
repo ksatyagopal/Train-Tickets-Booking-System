@@ -133,3 +133,4 @@ C:\Users\Admin\Desktop\Eurofins\WebApps\TrainTicketsBookingSystem\BookMyTrainAPI
 C:\Users\Admin\Desktop\Eurofins\WebApps\TrainTicketsBookingSystem\BookMyTrainAPI\bin\Debug\net5.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Admin\Desktop\Eurofins\WebApps\TrainTicketsBookingSystem\BookMyTrainAPI\bin\Debug\net5.0\runtimes\win-arm\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\Admin\Desktop\Eurofins\WebApps\TrainTicketsBookingSystem\BookMyTrainAPI\bin\Debug\net5.0\runtimes\win-arm64\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
+C:\Users\Admin\Desktop\Eurofins\WebApps\TrainTicketsBookingSystem\BookMyTrainAPI\bin\Debug\net5.0\BCrypt.Net-Next.dll

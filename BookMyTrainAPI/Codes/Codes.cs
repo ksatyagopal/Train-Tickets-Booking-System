@@ -5,8 +5,9 @@ using System.Linq;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using BCrypt.Net;
 
-namespace AdminAPI.Codes
+namespace BookMyTrainAPI.Codes
 {
     public class Codes
     {
@@ -23,23 +24,15 @@ namespace AdminAPI.Codes
             smtpClient.Send(mailMessage);
         }
 
-        public static string HashPassword(string password)
+        public string Hash(string password)
         {
-            // generate a 128-bit salt using a cryptographically strong random sequence of nonzero values
-            byte[] salt = new byte[128 / 8];
-            using (var rngCsp = new RNGCryptoServiceProvider())
-            {
-                rngCsp.GetNonZeroBytes(salt);
-            }
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
 
-            // derive a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 100000,
-                numBytesRequested: 256 / 8));
-            return hashed;
+        public bool Verify(string actualPassword, string givenPassword)
+        {
+            var isTrue = BCrypt.Net.BCrypt.Verify(givenPassword, actualPassword);
+            return isTrue;
         }
 
 

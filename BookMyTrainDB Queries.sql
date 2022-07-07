@@ -60,5 +60,4 @@ IsCancelled BIT,
 
 use BookMyTrainDB
 select * from Users
-delete from Users
-where UserID=1005
+
