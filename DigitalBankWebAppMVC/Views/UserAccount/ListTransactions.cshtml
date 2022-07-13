@@ -1,0 +1,91 @@
+﻿@model IEnumerable<DigitalBankWebAppMVC.Models.Transaction>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor httpaccesor
+
+@{
+    ViewData["Title"] = "ListTransactions";
+}
+
+<div class="text-right">
+    <a asp-controller="UserAccount" asp-action="Index">Back to Menu</a>
+</div>
+<br />
+
+@if (ViewBag.TransactionCount != 0)
+{
+    <h1>Transactions List</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TransactionId)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.TransactionDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FromAccountNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ToAccountNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TransactionAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TransactionReason)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Transaction item in ViewBag.allTransactions)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransactionId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransactionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FromAccountNavigation.AccHolderName)
+                    <b>@item.FromAccount</b>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ToAccountNavigation.AccHolderName)
+                    <b>@item.ToAccount</b>
+                </td>
+                @if (item.FromAccount.ToString() == httpaccesor.HttpContext.Session.GetString("useraccountnumber"))
+                {
+                    <td style="color:red">
+                        -@Html.DisplayFor(modelItem => item.TransactionAmount)
+                    </td>
+                }
+                else
+                {
+                    <td style="color:green">
+                        +@Html.DisplayFor(modelItem => item.TransactionAmount)
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransactionReason)
+                </td>
+                <td>
+                    <a class="text-info" asp-controller="Transactions" asp-action="Details" asp-route-id="@item.TransactionId">Details</a>
+                </td>
+            </tr>
+
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="text-center">
+        <h1>No Transactions Made</h1>
+        <img style="height:500px" src="~/nolist.svg" alt="No Transactions" />
+    </div>
+
+}

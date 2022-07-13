@@ -1,0 +1,77 @@
+﻿@model IEnumerable<DigitalBankWebAppMVC.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionReason)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionState)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPending)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FromAccountNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToAccountNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionReason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPending)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FromAccountNavigation.AccHolderName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToAccountNavigation.AccHolderName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TransactionId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TransactionId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TransactionId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

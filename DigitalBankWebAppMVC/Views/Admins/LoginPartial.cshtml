@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor httpacc
+
+@if (httpacc.HttpContext.Session.GetString("adminusername") == null)
+{
+    <div class="text-right">
+        <div>
+            <a class="text-dark my-4 p-2" asp-area="" asp-controller="Home" asp-action="LogInAsAdminIndex">Login </a>
+        </div>
+    </div>
+}
+else if(httpacc.HttpContext.Session.GetString("adminusername") != null)
+{
+    <div class="text-right">
+        <div>
+            <a class="text-dark my-4 p-2" href="#">@httpacc.HttpContext.Session.GetString("adminusername")</a> |
+            <a class="text-dark my-4 p-2" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+        </div>
+    </div>
+}

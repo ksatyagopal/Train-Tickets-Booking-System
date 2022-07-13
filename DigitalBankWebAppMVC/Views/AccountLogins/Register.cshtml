@@ -1,0 +1,71 @@
+﻿@model DigitalBankWebAppMVC.Models.AccountLogin
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h1>New User Register Page</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="AccountLogins" asp-action="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input type="email" asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecurityQuestion" class="control-label"></label>
+                <select asp-for="SecurityQuestion" class="form-control">
+                    <option value="Your First School Name?">Your First School Name?</option>
+                    <option value="Your Place of Birth?">Your Place of Birth?</option>
+                    <option value="Your pet name?">Your pet name?</option>
+                    <option value="Your Mother Maiden Name?">Your Mother's Maiden Name?</option>
+                    <option value="Your favourite character Name in Marvel?">Your favourite character Name in Marvel?</option>
+                </select>
+                <span asp-validation-for="SecurityQuestion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecurityQanswer" class="control-label"></label>
+                <input asp-for="SecurityQanswer" class="form-control" />
+                <span asp-validation-for="SecurityQanswer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input id="pwd" type="password" asp-for="Password" class="form-control" onfocusout="checkPassword()" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <span id="flag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function checkPassword() {
+        var pwd = document.getElementById("pwd");
+        var flag = document.getElementById("flag");
+        console.log(pwd.value);
+        var pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+        if (pwd.value && !pwd.value.match(pattern)) {
+            flag.innerHTML = "Password should have 1 Upper 1 Lower 1 Digit 1 Special Symbol";
+            pwd.value = "";
+        }
+        else {
+            flag.innerHTML = "";
+        }
+    }
+</script>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

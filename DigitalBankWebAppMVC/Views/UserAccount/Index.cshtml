@@ -1,0 +1,141 @@
+﻿@model DigitalBankWebAppMVC.Models.Account
+
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor accessor
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script type="text/javascript">
+    function swaptext() {
+        var value = document.getElementById("value");
+        var text = document.getElementById("text");
+        if (value.style.opacity == "0") {
+            value.style.opacity = "1";
+            text.innerHTML = "Click to Hide";
+        }
+        else {
+            value.style.opacity = "0";
+            text.innerHTML = "Click to View";
+        }
+    }
+</script>
+
+<div class="row my-3">
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="btn-light" onclick="swaptext()">
+                <b class="p-3">Balance</b>
+                <div class="card-body text-center">
+                    <h6 style="opacity:0;animation:linear" id="value">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash" viewBox="0 0 16 16">
+                            <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                            <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
+                        </svg> ₹ @Model.Balance
+                    </h6>
+                    <span id="text">Click to View</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+                <div class="card-body text-center">
+                    <h5>No Crads Requested</h5>
+                </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+                <div class="card-body text-center">
+                    <h5>No Loans Requested</h5>
+                </div>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div class="text-center">
+    <div class="row my-3">
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="Transactions" asp-action="Create" class="btn btn-secondary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Bank Transfer</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="UserAccount" asp-action="UnderConstruction" class="btn btn-primary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Pay Phone Number</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="UserAccount" asp-action="ListTransactions" class="btn btn-info m-md-3">
+                    <div class="card-body text-center">
+                        <h5>View Transactions</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="UserAccount" asp-action="UnderConstruction" class="btn btn-dark m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Request Personal Loan</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="UserAccount" asp-action="UnderConstruction" class="btn btn-success m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Request New Card</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a class="btn btn-warning m-md-3" asp-controller="UserAccount" asp-action="ListPendingTransactions">
+                    <div class="card-body text-center">
+                        <h5>Pending Transactions</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="Accounts" asp-action="Details" asp-route-id=@accessor.HttpContext.Session.GetString("useraccountnumber") class="btn btn-primary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>My Profile</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="UserAccount" asp-action="UnderConstruction" class="btn btn-danger m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Reset Password</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+

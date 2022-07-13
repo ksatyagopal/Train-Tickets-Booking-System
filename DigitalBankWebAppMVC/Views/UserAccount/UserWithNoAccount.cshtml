@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor accessor
+
+<div class="text-center">
+    <div class="row my-3">
+        <div class="col-sm-4">
+            <div class="card">
+                <a asp-controller="UserAccount" asp-action="CreateAccount" class="btn btn-secondary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Create Account</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <a href="#" class="btn btn-primary m-md-3">
+                    <div class="card-body text-center">
+                        <h5>Reset Password</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                @if (accessor.HttpContext.Session.GetString("useraccountnumber") != null)
+                {
+                    <a asp-controller="Accounts" asp-action="Details" asp-route-id=@accessor.HttpContext.Session.GetString("useraccountnumber") class="btn btn-info m-md-3">
+                        <div class="card-body text-center">
+                            <h5>My Profile</h5>
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <a href="#" class="btn btn-info m-md-3">
+                        <div class="card-body text-center">
+                            <h5>My Profile</h5>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

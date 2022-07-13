@@ -1,0 +1,52 @@
+﻿@model DigitalBankWebAppMVC.Models.Transaction
+
+@{
+    ViewData["Title"] = "Pay";
+}
+
+<h1>Pay</h1>
+
+<h3>Are you sure you want to pay this?</h3>
+<div>
+    <h4>Pending Transaction</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TransactionDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TransactionDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TransactionAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TransactionAmount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TransactionReason)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TransactionReason)
+        </dd>
+        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FromAccountNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FromAccountNavigation.AccHolderName)
+        </dd class>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ToAccountNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ToAccountNavigation.AccHolderName)
+        </dd class>
+    </dl>
+    
+    <form asp-controller="Transactions" asp-action="Pay">
+        <input type="hidden" asp-for="TransactionId" />
+        <input type="submit" value="Pay" class="btn btn-warning" /> |
+        <a asp-controller="UserAccount" asp-action="Index">Back</a>
+    </form>
+</div>

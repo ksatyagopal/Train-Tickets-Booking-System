@@ -1,0 +1,86 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<DigitalBankWebAppMVC.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Pending Transactions List";
+}
+
+<div class="text-right">
+    <a asp-controller="UserAccount" asp-action="Index">Back to Menu</a>
+</div>
+<br />
+@if (ViewBag.TransactionCount != 0)
+{
+    <h1>Pending Transactions List</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TransactionDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FromAccountNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ToAccountNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TransactionAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TransactionReason)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Transaction item in ViewBag.allTransactions)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TransactionDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FromAccountNavigation.AccHolderName)
+                        <b>@item.FromAccount</b>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ToAccountNavigation.AccHolderName)
+                        <b>@item.ToAccount</b>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TransactionAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TransactionReason)
+                    </td>
+                    <td>
+                        @if (item.TransactionState == true && item.IsPending == true) 
+                        {
+                            <a class="text-warning" asp-controller="Transactions" asp-action="Pay" asp-route-id="@item.TransactionId">Pay</a> <b>|</b>
+                            <a class="text-primary" asp-controller="Transactions" asp-action="Details" asp-route-id="@item.TransactionId">Details</a> <b>|</b>
+                            <a class="text-danger" asp-controller="Transactions" asp-action="Delete" asp-route-id="@item.TransactionId">Decline</a>
+                        }
+                        else{
+                            <p class="text-danger">Declined</p>
+                        }
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="text-center">
+        <h1>No Pending Transactions</h1>
+        <img style="height:500px" src="~/nolist.svg" alt="No Pending Transactions" />
+    </div>
+
+}

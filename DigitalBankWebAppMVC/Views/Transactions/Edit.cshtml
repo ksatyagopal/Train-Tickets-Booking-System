@@ -1,0 +1,69 @@
+﻿@model DigitalBankWebAppMVC.Models.Transaction
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Transaction</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TransactionId" />
+            <div class="form-group">
+                <label asp-for="FromAccount" class="control-label"></label>
+                <select asp-for="FromAccount" class="form-control" asp-items="ViewBag.FromAccount"></select>
+                <span asp-validation-for="FromAccount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToAccount" class="control-label"></label>
+                <select asp-for="ToAccount" class="form-control" asp-items="ViewBag.ToAccount"></select>
+                <span asp-validation-for="ToAccount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransactionDate" class="control-label"></label>
+                <input asp-for="TransactionDate" class="form-control" />
+                <span asp-validation-for="TransactionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransactionAmount" class="control-label"></label>
+                <input asp-for="TransactionAmount" class="form-control" />
+                <span asp-validation-for="TransactionAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransactionType" class="control-label"></label>
+                <input asp-for="TransactionType" class="form-control" />
+                <span asp-validation-for="TransactionType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransactionReason" class="control-label"></label>
+                <input asp-for="TransactionReason" class="form-control" />
+                <span asp-validation-for="TransactionReason" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="TransactionState" /> @Html.DisplayNameFor(model => model.TransactionState)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsPending" class="control-label"></label>
+                <input asp-for="IsPending" class="form-control" />
+                <span asp-validation-for="IsPending" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
